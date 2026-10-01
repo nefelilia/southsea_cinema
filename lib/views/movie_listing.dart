@@ -16,10 +16,23 @@ class MovieListing extends StatelessWidget {
       ),
       drawer: const NavDrawer(),
       body: Container(
-  child: const Text(
-  'Harry Potter and the Philosopher\'s Stone\n\nA young wizard begins his first year at Hogwarts School of Witchcraft and Wizardry.',
-  ),
-),
+        child: const Column(
+          children: [
+            Text(
+              'Harry Potter and the Philosopher\'s Stone',
+            ),
+            Text(
+              'A young wizard begins his first year at Hogwarts School of Witchcraft and Wizardry.',
+            ),
+            Row(
+              children: [
+                Text('PG'),
+                Text('2h 32m'),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
