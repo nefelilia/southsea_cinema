@@ -16,6 +16,7 @@ class _MovieListingState extends State<MovieListing> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: cinemaBackground,
       appBar: AppBar(
         title: const Text(appTitle, style: cinemaHeaderStyle),
         backgroundColor: cinemaSurface,
@@ -24,21 +25,36 @@ class _MovieListingState extends State<MovieListing> {
       ),
       drawer: const NavDrawer(),
       body: Container(
+        padding: const EdgeInsets.all(20),
         child: Column(
           children: [
             Text(
               'Harry Potter and the Philosopher\'s Stone',
+               style: cinemaHeaderStyle,
             ),
             Text(
-              'A young wizard begins his first year at Hogwarts School of Witchcraft and Wizardry.',
-            ),
+  'A young wizard begins his first year at Hogwarts School of Witchcraft and Wizardry.',
+  style: TextStyle(color: cinemaFontMuted),
+),
             Row(
-              children: [
-                Text('PG'),
-                Text('2h 32m'),
-              ],
-            ),
-            Text('Tickets'),
+  mainAxisAlignment: MainAxisAlignment.center,
+  children: [
+    Text(
+      'PG',
+      style: TextStyle(color: cinemaFontWhite),
+    ),
+    SizedBox(width: 20),
+    Text(
+      '2h 32m',
+      style: TextStyle(color: cinemaFontWhite),
+    ),
+  ],
+),
+ SizedBox(height: 12),        
+            Text(
+  'Tickets',
+  style: TextStyle(color: cinemaFontWhite),
+),
 
 DropdownMenu<int>(
   initialSelection: selectedQuantity,
@@ -57,6 +73,10 @@ DropdownMenu<int>(
   },
 ),
 ElevatedButton(
+  style: ElevatedButton.styleFrom(
+  backgroundColor: cinemaBrand,
+  foregroundColor: cinemaBackground,
+),
   onPressed: () {
     setState(() {
       addedQuantity = selectedQuantity;
@@ -64,7 +84,10 @@ ElevatedButton(
   },
   child: const Text('ADD TO ORDER'),
 ),
-Text('$addedQuantity ticket(s) added to order'),
+Text(
+  '$addedQuantity ticket(s) added to order',
+  style: TextStyle(color: cinemaFontMuted),
+),
           ],
         ),
       ),
