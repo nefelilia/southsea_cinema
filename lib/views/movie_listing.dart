@@ -24,72 +24,102 @@ class _MovieListingState extends State<MovieListing> {
         elevation: 0,
       ),
       drawer: const NavDrawer(),
-      body: Container(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          children: [
-            Text(
-              'Harry Potter and the Philosopher\'s Stone',
-               style: cinemaHeaderStyle,
-            ),
-            Text(
-  'A young wizard begins his first year at Hogwarts School of Witchcraft and Wizardry.',
-  style: TextStyle(color: cinemaFontMuted),
-),
-            Row(
-  mainAxisAlignment: MainAxisAlignment.center,
-  children: [
-    Text(
-      'PG',
-      style: TextStyle(color: cinemaFontWhite),
-    ),
-    SizedBox(width: 20),
-    Text(
-      '2h 32m',
-      style: TextStyle(color: cinemaFontWhite),
-    ),
-  ],
-),
- SizedBox(height: 12),        
-            Text(
-  'Tickets',
-  style: TextStyle(color: cinemaFontWhite),
-),
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          final bool isNarrow = constraints.maxWidth < 600;
 
-DropdownMenu<int>(
-  initialSelection: selectedQuantity,
-  dropdownMenuEntries: const [
-    DropdownMenuEntry(value: 0, label: '0'),
-    DropdownMenuEntry(value: 1, label: '1'),
-    DropdownMenuEntry(value: 2, label: '2'),
-    DropdownMenuEntry(value: 3, label: '3'),
-    DropdownMenuEntry(value: 4, label: '4'),
-    DropdownMenuEntry(value: 5, label: '5'),
-  ],
-  onSelected: (value) {
-    setState(() {
-      selectedQuantity = value ?? 0;
-    });
-  },
-),
-ElevatedButton(
-  style: ElevatedButton.styleFrom(
-  backgroundColor: cinemaBrand,
-  foregroundColor: cinemaBackground,
-),
-  onPressed: () {
-    setState(() {
-      addedQuantity = selectedQuantity;
-    });
-  },
-  child: const Text('ADD TO ORDER'),
-),
-Text(
-  '$addedQuantity ticket(s) added to order',
-  style: TextStyle(color: cinemaFontMuted),
-),
-          ],
-        ),
+          return Container(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              children: [
+                Text(
+                  'Harry Potter and the Philosopher\'s Stone',
+                  style: cinemaHeaderStyle,
+                ),
+                Text(
+                  'A young wizard begins his first year at Hogwarts School of Witchcraft and Wizardry.',
+                  style: TextStyle(color: cinemaFontMuted),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'PG',
+                      style: TextStyle(color: cinemaFontWhite),
+                    ),
+                    const SizedBox(width: 20),
+                    Text(
+                      '2h 32m',
+                      style: TextStyle(color: cinemaFontWhite),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+
+                Flex(
+                  direction: isNarrow ? Axis.vertical : Axis.horizontal,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Tickets',
+                      style: TextStyle(color: cinemaFontWhite),
+                    ),
+
+                    SizedBox(
+                      width: isNarrow ? 0 : 12,
+                      height: isNarrow ? 8 : 0,
+                    ),
+
+                    DropdownMenu<int>(
+                      initialSelection: selectedQuantity,
+                      dropdownMenuEntries: const [
+                        DropdownMenuEntry(value: 0, label: '0'),
+                        DropdownMenuEntry(value: 1, label: '1'),
+                        DropdownMenuEntry(value: 2, label: '2'),
+                        DropdownMenuEntry(value: 3, label: '3'),
+                        DropdownMenuEntry(value: 4, label: '4'),
+                        DropdownMenuEntry(value: 5, label: '5'),
+                      ],
+                      onSelected: (value) {
+                        setState(() {
+                          selectedQuantity = value ?? 0;
+                        });
+                      },
+                    ),
+
+                    SizedBox(
+                      width: isNarrow ? 0 : 12,
+                      height: isNarrow ? 8 : 0,
+                    ),
+
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: cinemaBrand,
+                        foregroundColor: cinemaBackground,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          addedQuantity = selectedQuantity;
+                        });
+                      },
+                      child: const Text('ADD TO ORDER'),
+                    ),
+
+                    SizedBox(
+                      width: isNarrow ? 0 : 12,
+                      height: isNarrow ? 8 : 0,
+                    ),
+
+                    Text(
+                      '$addedQuantity ticket(s) added to order',
+                      style: TextStyle(color: cinemaFontMuted),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          );
+        },
       ),
     );
   }
