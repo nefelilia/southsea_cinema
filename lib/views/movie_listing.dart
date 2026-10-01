@@ -11,6 +11,7 @@ class MovieListing extends StatefulWidget {
 
 class _MovieListingState extends State<MovieListing> {
   int selectedQuantity = 0;
+  int addedQuantity = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -55,6 +56,15 @@ DropdownMenu<int>(
     });
   },
 ),
+ElevatedButton(
+  onPressed: () {
+    setState(() {
+      addedQuantity = selectedQuantity;
+    });
+  },
+  child: const Text('ADD TO ORDER'),
+),
+Text('$addedQuantity ticket(s) added to order'),
           ],
         ),
       ),
