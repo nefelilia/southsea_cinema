@@ -1,9 +1,15 @@
+
 import 'package:flutter/material.dart';
 import 'package:southsea_cinema/constants.dart';
-import 'package:southsea_cinema/widgets/nav_drawer.dart';
+import 'package:southsea_cinema/models/movie.dart';
 
 class MovieListing extends StatefulWidget {
-  const MovieListing({super.key});
+  final Movie movie;
+
+  const MovieListing({
+    super.key,
+    required this.movie,
+  });
 
   @override
   State<MovieListing> createState() => _MovieListingState();
@@ -18,51 +24,90 @@ class _MovieListingState extends State<MovieListing> {
     return Scaffold(
       backgroundColor: cinemaBackground,
       appBar: AppBar(
-        title: const Text(appTitle, style: cinemaHeaderStyle),
+        title: const Text(
+          appTitle,
+          style: cinemaHeaderStyle,
+        ),
         backgroundColor: cinemaSurface,
         iconTheme: const IconThemeData(color: cinemaBrand),
         elevation: 0,
       ),
-      drawer: const NavDrawer(),
       body: LayoutBuilder(
         builder: (context, constraints) {
           final bool isNarrow = constraints.maxWidth < 600;
 
-          return Container(
+          return SingleChildScrollView(
             padding: const EdgeInsets.all(20),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Harry Potter and the Philosopher\'s Stone',
+                  widget.movie.title,
                   style: cinemaHeaderStyle,
                 ),
+
+                const SizedBox(height: 12),
+
                 Text(
-                  'A young wizard begins his first year at Hogwarts School of Witchcraft and Wizardry.',
-                  style: TextStyle(color: cinemaFontMuted),
+                  widget.movie.synopsis,
+                  style: const TextStyle(
+                    color: cinemaFontMuted,
+                  ),
                 ),
+
+                const SizedBox(height: 12),
+
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'PG',
-                      style: TextStyle(color: cinemaFontWhite),
+                      widget.movie.ageRating,
+                      style: const TextStyle(
+                        color: cinemaFontWhite,
+                      ),
                     ),
+
                     const SizedBox(width: 20),
+
                     Text(
-                      '2h 32m',
-                      style: TextStyle(color: cinemaFontWhite),
+                      widget.movie.runtime,
+                      style: const TextStyle(
+                        color: cinemaFontWhite,
+                      ),
                     ),
                   ],
                 ),
+
                 const SizedBox(height: 12),
 
+                Text(
+                  'Screening: ${widget.movie.screeningTime}',
+                  style: const TextStyle(
+                    color: cinemaFontWhite,
+                  ),
+                ),
+
+                const SizedBox(height: 8),
+
+                Text(
+                  'Ticket: £${widget.movie.ticketPrice.toStringAsFixed(2)}',
+                  style: const TextStyle(
+                    color: cinemaFontWhite,
+                  ),
+                ),
+
+                const SizedBox(height: 20),
+
                 Flex(
-                  direction: isNarrow ? Axis.vertical : Axis.horizontal,
+                  direction:
+                      isNarrow ? Axis.vertical : Axis.horizontal,
                   mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text(
+                    const Text(
                       'Tickets',
-                      style: TextStyle(color: cinemaFontWhite),
+                      style: TextStyle(
+                        color: cinemaFontWhite,
+                      ),
                     ),
 
                     SizedBox(
@@ -96,6 +141,7 @@ class _MovieListingState extends State<MovieListing> {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: cinemaBrand,
                         foregroundColor: cinemaBackground,
+                        shape: const RoundedRectangleBorder(),
                       ),
                       onPressed: () {
                         setState(() {
@@ -112,7 +158,9 @@ class _MovieListingState extends State<MovieListing> {
 
                     Text(
                       '$addedQuantity ticket(s) added to order',
-                      style: TextStyle(color: cinemaFontMuted),
+                      style: const TextStyle(
+                        color: cinemaFontMuted,
+                      ),
                     ),
                   ],
                 ),
