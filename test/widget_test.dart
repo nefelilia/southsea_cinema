@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:southsea_cinema/main.dart';
 import 'package:southsea_cinema/views/home_view.dart';
+import 'package:southsea_cinema/views/movie_listing.dart';
 import 'package:southsea_cinema/widgets/movie_card.dart';
 
 void main() {
@@ -73,6 +74,47 @@ void main() {
       );
 
       expect(find.text('Ticket: £9.50'), findsOneWidget);
+    });
+
+    testWidgets('User can book tickets for a Harry Potter movie',
+        (tester) async {
+      await tester.pumpWidget(const SouthseaCinemaApp());
+
+      // Tap the first movie's booking button.
+      final bookButton = find.text('Book Tickets').first;
+
+      await tester.ensureVisible(bookButton);
+      await tester.tap(bookButton);
+      await tester.pumpAndSettle();
+
+      // Check that the booking screen opens.
+      expect(find.byType(MovieListing), findsOneWidget);
+
+      expect(
+        find.text("Harry Potter and the Philosopher's Stone"),
+        findsOneWidget,
+      );
+
+      // Check that the ticket dropdown exists.
+      expect(find.byType(DropdownMenu<int>), findsOneWidget);
+
+      // Open the dropdown.
+      await tester.tap(find.byType(DropdownMenu<int>));
+      await tester.pumpAndSettle();
+
+      // Select 2 tickets.
+      await tester.tap(find.text('2').last);
+      await tester.pumpAndSettle();
+
+      // Tap ADD TO ORDER.
+      await tester.tap(find.text('ADD TO ORDER'));
+      await tester.pumpAndSettle();
+
+      // Check the confirmation message.
+      expect(
+        find.text('2 ticket(s) added to order'),
+        findsOneWidget,
+      );
     });
   });
 }

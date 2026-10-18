@@ -33,7 +33,7 @@ class _MovieListingState extends State<MovieListing> {
       ),
       body: LayoutBuilder(
         builder: (context, constraints) {
-          final bool isNarrow = constraints.maxWidth < 600;
+          final bool isNarrow = constraints.maxWidth < 900;
 
           return SingleChildScrollView(
             padding: const EdgeInsets.all(20),
