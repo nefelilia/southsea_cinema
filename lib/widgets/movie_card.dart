@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import '../models/movie.dart';
 import 'package:southsea_cinema/constants.dart';
@@ -29,7 +28,6 @@ class MovieCard extends StatelessWidget {
               fit: BoxFit.contain,
             ),
             const SizedBox(height: 12),
-
             Text(
               movie.title,
               style: const TextStyle(
@@ -37,17 +35,13 @@ class MovieCard extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-
             Text('Age rating: ${movie.ageRating}'),
             const SizedBox(height: 8),
-
             Text(movie.synopsis),
             const SizedBox(height: 8),
-
             Text('Screening: ${movie.screeningTime}'),
             Text('Ticket: £${movie.ticketPrice.toStringAsFixed(2)}'),
             const SizedBox(height: 12),
-
             ElevatedButton(
               onPressed: () {
                 Navigator.push(

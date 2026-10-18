@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:southsea_cinema/constants.dart';
 import 'package:southsea_cinema/models/movie.dart';
@@ -45,18 +44,14 @@ class _MovieListingState extends State<MovieListing> {
                   widget.movie.title,
                   style: cinemaHeaderStyle,
                 ),
-
                 const SizedBox(height: 12),
-
                 Text(
                   widget.movie.synopsis,
                   style: const TextStyle(
                     color: cinemaFontMuted,
                   ),
                 ),
-
                 const SizedBox(height: 12),
-
                 Row(
                   children: [
                     Text(
@@ -65,9 +60,7 @@ class _MovieListingState extends State<MovieListing> {
                         color: cinemaFontWhite,
                       ),
                     ),
-
                     const SizedBox(width: 20),
-
                     Text(
                       widget.movie.runtime,
                       style: const TextStyle(
@@ -76,30 +69,23 @@ class _MovieListingState extends State<MovieListing> {
                     ),
                   ],
                 ),
-
                 const SizedBox(height: 12),
-
                 Text(
                   'Screening: ${widget.movie.screeningTime}',
                   style: const TextStyle(
                     color: cinemaFontWhite,
                   ),
                 ),
-
                 const SizedBox(height: 8),
-
                 Text(
-  'Ticket: ${widget.movie.formattedPrice}',
-  style: const TextStyle(
-    color: cinemaFontWhite,
-  ),
-),
-
+                  'Ticket: ${widget.movie.formattedPrice}',
+                  style: const TextStyle(
+                    color: cinemaFontWhite,
+                  ),
+                ),
                 const SizedBox(height: 20),
-
                 Flex(
-                  direction:
-                      isNarrow ? Axis.vertical : Axis.horizontal,
+                  direction: isNarrow ? Axis.vertical : Axis.horizontal,
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -109,12 +95,10 @@ class _MovieListingState extends State<MovieListing> {
                         color: cinemaFontWhite,
                       ),
                     ),
-
                     SizedBox(
                       width: isNarrow ? 0 : 12,
                       height: isNarrow ? 8 : 0,
                     ),
-
                     DropdownMenu<int>(
                       initialSelection: selectedQuantity,
                       dropdownMenuEntries: const [
@@ -131,12 +115,10 @@ class _MovieListingState extends State<MovieListing> {
                         });
                       },
                     ),
-
                     SizedBox(
                       width: isNarrow ? 0 : 12,
                       height: isNarrow ? 8 : 0,
                     ),
-
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: cinemaBrand,
@@ -150,12 +132,10 @@ class _MovieListingState extends State<MovieListing> {
                       },
                       child: const Text('ADD TO ORDER'),
                     ),
-
                     SizedBox(
                       width: isNarrow ? 0 : 12,
                       height: isNarrow ? 8 : 0,
                     ),
-
                     Text(
                       '$addedQuantity ticket(s) added to order',
                       style: const TextStyle(

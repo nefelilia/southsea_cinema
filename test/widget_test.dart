@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:southsea_cinema/main.dart';
@@ -50,20 +49,18 @@ void main() {
       );
     });
 
-    
-testWidgets('Home screen displays booking buttons', (tester) async {
-  await tester.pumpWidget(const SouthseaCinemaApp());
+    testWidgets('Home screen displays booking buttons', (tester) async {
+      await tester.pumpWidget(const SouthseaCinemaApp());
 
-  expect(find.text('Book Tickets'), findsOneWidget);
+      expect(find.text('Book Tickets'), findsOneWidget);
 
-  await tester.scrollUntilVisible(
-    find.text('Harry Potter and the Chamber of Secrets'),
-    200,
-  );
+      await tester.scrollUntilVisible(
+        find.text('Harry Potter and the Chamber of Secrets'),
+        200,
+      );
 
-  expect(find.text('Book Tickets'), findsNWidgets(2));
-});
-
+      expect(find.text('Book Tickets'), findsNWidgets(2));
+    });
 
     testWidgets('Movie cards display ticket prices', (tester) async {
       await tester.pumpWidget(const SouthseaCinemaApp());
