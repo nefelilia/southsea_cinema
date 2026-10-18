@@ -89,11 +89,11 @@ class _MovieListingState extends State<MovieListing> {
                 const SizedBox(height: 8),
 
                 Text(
-                  'Ticket: £${widget.movie.ticketPrice.toStringAsFixed(2)}',
-                  style: const TextStyle(
-                    color: cinemaFontWhite,
-                  ),
-                ),
+  'Ticket: ${widget.movie.formattedPrice}',
+  style: const TextStyle(
+    color: cinemaFontWhite,
+  ),
+),
 
                 const SizedBox(height: 20),
 
