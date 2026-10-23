@@ -1,4 +1,4 @@
-import '../models/movie.dart';
+import 'package:southsea_cinema/models/movie.dart';
 
 class MovieRepository {
   List<Movie> getMovies() {
