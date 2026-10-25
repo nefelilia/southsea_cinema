@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:southsea_cinema/main.dart';
@@ -80,14 +81,13 @@ void main() {
         (tester) async {
       await tester.pumpWidget(const SouthseaCinemaApp());
 
-      // Tap the first movie's booking button.
+      // Open the first movie's booking page.
       final bookButton = find.text('Book Tickets').first;
 
       await tester.ensureVisible(bookButton);
       await tester.tap(bookButton);
       await tester.pumpAndSettle();
 
-      // Check that the booking screen opens.
       expect(find.byType(MovieListing), findsOneWidget);
 
       expect(
@@ -95,19 +95,31 @@ void main() {
         findsOneWidget,
       );
 
-      // Check that the ticket dropdown exists.
-      expect(find.byType(DropdownMenu<int>), findsOneWidget);
+      // Find the ticket dropdown.
+      final dropdown = find.byType(DropdownMenu<int>);
+
+      expect(dropdown, findsOneWidget);
+
+      // Scroll down to the ticket controls.
+      await tester.ensureVisible(dropdown);
+      await tester.pumpAndSettle();
 
       // Open the dropdown.
-      await tester.tap(find.byType(DropdownMenu<int>));
+      await tester.tap(dropdown);
       await tester.pumpAndSettle();
 
       // Select 2 tickets.
       await tester.tap(find.text('2').last);
       await tester.pumpAndSettle();
 
-      // Tap ADD TO ORDER.
-      await tester.tap(find.text('ADD TO ORDER'));
+      // Scroll to the ADD TO ORDER button.
+      final addButton = find.text('ADD TO ORDER');
+
+      await tester.ensureVisible(addButton);
+      await tester.pumpAndSettle();
+
+      // Add tickets to the order.
+      await tester.tap(addButton);
       await tester.pumpAndSettle();
 
       // Check the confirmation message.
