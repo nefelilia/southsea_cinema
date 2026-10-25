@@ -4,6 +4,7 @@ import 'package:southsea_cinema/constants.dart';
 import 'package:southsea_cinema/models/movie.dart';
 import 'package:southsea_cinema/widgets/nav_drawer.dart';
 import 'package:southsea_cinema/widgets/primary_button.dart';
+import 'package:southsea_cinema/repositories/basket_repository.dart';
 
 class MovieListing extends StatefulWidget {
   final Movie movie;
@@ -143,6 +144,11 @@ class _MovieListingState extends State<MovieListing> {
                     PrimaryButton(
   label: 'ADD TO ORDER',
   onPressed: () {
+    basketRepository.addTickets(
+      widget.movie,
+      selectedQuantity,
+    );
+
     setState(() {
       addedQuantity = selectedQuantity;
     });

@@ -57,3 +57,4 @@ class BasketRepository {
     );
   }
 }
+final BasketRepository basketRepository = BasketRepository();
