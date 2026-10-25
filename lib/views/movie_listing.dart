@@ -1,6 +1,8 @@
+
 import 'package:flutter/material.dart';
 import 'package:southsea_cinema/constants.dart';
 import 'package:southsea_cinema/models/movie.dart';
+import 'package:southsea_cinema/widgets/nav_drawer.dart';
 
 class MovieListing extends StatefulWidget {
   final Movie movie;
@@ -23,14 +25,21 @@ class _MovieListingState extends State<MovieListing> {
     return Scaffold(
       backgroundColor: cinemaBackground,
       appBar: AppBar(
-        title: const Text(
-          appTitle,
-          style: cinemaHeaderStyle,
-        ),
-        backgroundColor: cinemaSurface,
-        iconTheme: const IconThemeData(color: cinemaBrand),
-        elevation: 0,
-      ),
+  title: const Text(appTitle),
+  automaticallyImplyLeading: false,
+  leading: Builder(
+    builder: (context) {
+      return IconButton(
+        icon: const Icon(Icons.menu),
+        tooltip: 'Open navigation menu',
+        onPressed: () {
+          Scaffold.of(context).openDrawer();
+        },
+      );
+    },
+  ),
+),
+      drawer: const NavDrawer(),
       body: LayoutBuilder(
         builder: (context, constraints) {
           final bool isNarrow = constraints.maxWidth < 900;
@@ -45,6 +54,16 @@ class _MovieListingState extends State<MovieListing> {
                   style: cinemaHeaderStyle,
                 ),
                 const SizedBox(height: 12),
+
+                // Poster of the selected movie
+                Image.asset(
+  widget.movie.posterImagePath,
+  height: 280,
+  width: 190,
+  fit: BoxFit.contain,
+),
+
+                const SizedBox(height: 16),
                 Text(
                   widget.movie.synopsis,
                   style: const TextStyle(
@@ -85,7 +104,8 @@ class _MovieListingState extends State<MovieListing> {
                 ),
                 const SizedBox(height: 20),
                 Flex(
-                  direction: isNarrow ? Axis.vertical : Axis.horizontal,
+                  direction:
+                      isNarrow ? Axis.vertical : Axis.horizontal,
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
