@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:southsea_cinema/constants.dart';
 import 'package:southsea_cinema/repositories/basket_repository.dart';
 import 'package:southsea_cinema/widgets/nav_drawer.dart';
+import 'package:southsea_cinema/widgets/primary_button.dart';
 
 class BasketView extends StatefulWidget {
   const BasketView({super.key});
@@ -11,6 +12,18 @@ class BasketView extends StatefulWidget {
 }
 
 class _BasketViewState extends State<BasketView> {
+  void checkout() {
+    setState(() {
+      basketRepository.clearBasket();
+    });
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Checkout completed successfully!'),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final items = basketRepository.items;
@@ -21,19 +34,19 @@ class _BasketViewState extends State<BasketView> {
         title: const Text(appTitle),
       ),
       drawer: const NavDrawer(),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: items.isEmpty
-            ? const Center(
-                child: Text(
-                  'Your basket is empty',
-                  style: TextStyle(
-                    color: cinemaFontWhite,
-                    fontSize: 20,
-                  ),
+      body: items.isEmpty
+          ? const Center(
+              child: Text(
+                'Your basket is empty',
+                style: TextStyle(
+                  color: cinemaFontWhite,
+                  fontSize: 18,
                 ),
-              )
-            : Column(
+              ),
+            )
+          : Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
@@ -57,9 +70,10 @@ class _BasketViewState extends State<BasketView> {
                               ),
                             ),
                             subtitle: Text(
-                              '${item.quantity} ticket(s) × ${item.movie.formattedPrice}',
+                              '${item.quantity} ticket(s) × '
+                              '${item.movie.formattedPrice}',
                               style: const TextStyle(
-                                color: cinemaFontMuted,
+                                color: cinemaFontWhite,
                               ),
                             ),
                             trailing: Row(
@@ -73,9 +87,23 @@ class _BasketViewState extends State<BasketView> {
                                 ),
                                 IconButton(
                                   icon: const Icon(
-                                    Icons.delete,
-                                    color: cinemaBrand,
+                                    Icons.remove_circle_outline,
                                   ),
+                                  color: cinemaBrand,
+                                  tooltip: 'Remove one ticket',
+                                  onPressed: () {
+                                    setState(() {
+                                      basketRepository.removeTicket(
+                                        item.movie.id,
+                                      );
+                                    });
+                                  },
+                                ),
+                                IconButton(
+                                  icon: const Icon(
+                                    Icons.delete,
+                                  ),
+                                  color: cinemaBrand,
                                   tooltip: 'Remove movie',
                                   onPressed: () {
                                     setState(() {
@@ -93,8 +121,10 @@ class _BasketViewState extends State<BasketView> {
                     ),
                   ),
                   const Divider(),
+                  const SizedBox(height: 12),
                   Text(
-                    'Total tickets: ${basketRepository.totalTickets}',
+                    'Total tickets: '
+                    '${basketRepository.totalTickets}',
                     style: const TextStyle(
                       color: cinemaFontWhite,
                       fontSize: 18,
@@ -102,17 +132,25 @@ class _BasketViewState extends State<BasketView> {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'Total: £${basketRepository.totalPrice.toStringAsFixed(2)}',
+                    'Total price: '
+                    '£${basketRepository.totalPrice.toStringAsFixed(2)}',
                     style: const TextStyle(
                       color: cinemaBrand,
-                      fontSize: 24,
+                      fontSize: 22,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   const SizedBox(height: 20),
+                  SizedBox(
+                    width: double.infinity,
+                    child: PrimaryButton(
+                      label: 'CHECKOUT',
+                      onPressed: checkout,
+                    ),
+                  ),
                 ],
               ),
-      ),
+            ),
     );
   }
 }
