@@ -1,9 +1,28 @@
+
+import 'dart:convert';
+import 'package:flutter/services.dart';
 import 'package:southsea_cinema/models/movie.dart';
 
 class MovieRepository {
+  Future<List<Movie>> loadMoviesFromAsset() async {
+    final String jsonString = await rootBundle.loadString(
+      'assets/data/movies.json',
+    );
+
+    final List<dynamic> jsonList = jsonDecode(jsonString);
+
+    return jsonList
+        .map(
+          (json) => Movie.fromJson(
+            json as Map<String, dynamic>,
+          ),
+        )
+        .toList();
+  }
+
   List<Movie> getMovies() {
     return [
-      Movie(
+      const Movie(
         id: 'hp1',
         title: "Harry Potter and the Philosopher's Stone",
         synopsis:
@@ -14,7 +33,7 @@ class MovieRepository {
         ticketPrice: 8.50,
         posterImagePath: 'assets/images/harry_potter_1.jpg',
       ),
-      Movie(
+      const Movie(
         id: 'hp2',
         title: 'Harry Potter and the Chamber of Secrets',
         synopsis:
