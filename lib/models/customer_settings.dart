@@ -1,4 +1,3 @@
-
 class CustomerSettings {
   final String fullName;
   final String address;

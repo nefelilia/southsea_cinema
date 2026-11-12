@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:southsea_cinema/constants.dart';
 import 'package:southsea_cinema/models/customer_settings.dart';
@@ -100,7 +99,6 @@ class _SettingsViewState extends State<SettingsView> {
                 style: cinemaHeaderStyle,
               ),
               const SizedBox(height: 24),
-
               TextFormField(
                 controller: _nameController,
                 decoration: const InputDecoration(
@@ -115,7 +113,6 @@ class _SettingsViewState extends State<SettingsView> {
                 },
               ),
               const SizedBox(height: 20),
-
               TextFormField(
                 controller: _addressController,
                 maxLines: 3,
@@ -131,7 +128,6 @@ class _SettingsViewState extends State<SettingsView> {
                 },
               ),
               const SizedBox(height: 20),
-
               TextFormField(
                 controller: _emailController,
                 keyboardType: TextInputType.emailAddress,
@@ -149,7 +145,6 @@ class _SettingsViewState extends State<SettingsView> {
                 },
               ),
               const SizedBox(height: 20),
-
               TextFormField(
                 controller: _patronController,
                 keyboardType: TextInputType.number,
@@ -165,7 +160,6 @@ class _SettingsViewState extends State<SettingsView> {
                 },
               ),
               const SizedBox(height: 28),
-
               const Text(
                 'Preferences',
                 style: TextStyle(
@@ -189,7 +183,6 @@ class _SettingsViewState extends State<SettingsView> {
                 },
               ),
               const SizedBox(height: 28),
-
               Wrap(
                 spacing: 12,
                 runSpacing: 12,

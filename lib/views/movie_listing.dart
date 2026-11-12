@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:southsea_cinema/constants.dart';
 import 'package:southsea_cinema/models/movie.dart';
@@ -27,20 +26,20 @@ class _MovieListingState extends State<MovieListing> {
     return Scaffold(
       backgroundColor: cinemaBackground,
       appBar: AppBar(
-  title: const Text(appTitle),
-  automaticallyImplyLeading: false,
-  leading: Builder(
-    builder: (context) {
-      return IconButton(
-        icon: const Icon(Icons.menu),
-        tooltip: 'Open navigation menu',
-        onPressed: () {
-          Scaffold.of(context).openDrawer();
-        },
-      );
-    },
-  ),
-),
+        title: const Text(appTitle),
+        automaticallyImplyLeading: false,
+        leading: Builder(
+          builder: (context) {
+            return IconButton(
+              icon: const Icon(Icons.menu),
+              tooltip: 'Open navigation menu',
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
+            );
+          },
+        ),
+      ),
       drawer: const NavDrawer(),
       body: LayoutBuilder(
         builder: (context, constraints) {
@@ -59,11 +58,11 @@ class _MovieListingState extends State<MovieListing> {
 
                 // Poster of the selected movie
                 Image.asset(
-  widget.movie.posterImagePath,
-  height: 280,
-  width: 190,
-  fit: BoxFit.contain,
-),
+                  widget.movie.posterImagePath,
+                  height: 280,
+                  width: 190,
+                  fit: BoxFit.contain,
+                ),
 
                 const SizedBox(height: 16),
                 Text(
@@ -106,8 +105,7 @@ class _MovieListingState extends State<MovieListing> {
                 ),
                 const SizedBox(height: 20),
                 Flex(
-                  direction:
-                      isNarrow ? Axis.vertical : Axis.horizontal,
+                  direction: isNarrow ? Axis.vertical : Axis.horizontal,
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -142,18 +140,18 @@ class _MovieListingState extends State<MovieListing> {
                       height: isNarrow ? 8 : 0,
                     ),
                     PrimaryButton(
-  label: 'ADD TO ORDER',
-  onPressed: () {
-    basketRepository.addTickets(
-      widget.movie,
-      selectedQuantity,
-    );
+                      label: 'ADD TO ORDER',
+                      onPressed: () {
+                        basketRepository.addTickets(
+                          widget.movie,
+                          selectedQuantity,
+                        );
 
-    setState(() {
-      addedQuantity = selectedQuantity;
-    });
-  },
-),
+                        setState(() {
+                          addedQuantity = selectedQuantity;
+                        });
+                      },
+                    ),
                     SizedBox(
                       width: isNarrow ? 0 : 12,
                       height: isNarrow ? 8 : 0,

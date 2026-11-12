@@ -1,4 +1,3 @@
-
 import 'package:southsea_cinema/models/movie.dart';
 import 'package:southsea_cinema/models/basket_item.dart';
 
@@ -57,4 +56,5 @@ class BasketRepository {
     );
   }
 }
+
 final BasketRepository basketRepository = BasketRepository();

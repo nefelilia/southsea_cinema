@@ -1,4 +1,3 @@
-
 import 'package:southsea_cinema/models/customer_settings.dart';
 
 class CustomerSettingsRepository {

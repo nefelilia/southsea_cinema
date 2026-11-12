@@ -1,11 +1,15 @@
-
 import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:southsea_cinema/models/movie.dart';
 
 class MovieRepository {
+  final AssetBundle assetBundle;
+
+  MovieRepository({AssetBundle? assetBundle})
+      : assetBundle = assetBundle ?? rootBundle;
+
   Future<List<Movie>> loadMoviesFromAsset() async {
-    final String jsonString = await rootBundle.loadString(
+    final String jsonString = await assetBundle.loadString(
       'assets/data/movies.json',
     );
 
@@ -20,39 +24,19 @@ class MovieRepository {
         .toList();
   }
 
-  List<Movie> getMovies() {
-    return [
-      const Movie(
-        id: 'hp1',
-        title: "Harry Potter and the Philosopher's Stone",
-        synopsis:
-            'Harry discovers he is a wizard and begins his first year at Hogwarts.',
-        ageRating: 'PG',
-        runtime: '2h 32m',
-        screeningTime: '14:00',
-        ticketPrice: 8.50,
-        posterImagePath: 'assets/images/harry_potter_1.jpg',
-      ),
-      const Movie(
-        id: 'hp2',
-        title: 'Harry Potter and the Chamber of Secrets',
-        synopsis:
-            'Harry returns to Hogwarts and investigates a mysterious hidden chamber.',
-        ageRating: 'PG',
-        runtime: '2h 41m',
-        screeningTime: '17:30',
-        ticketPrice: 9.50,
-        posterImagePath: 'assets/images/harry_potter_2.jpg',
-      ),
-    ];
+  Future<List<Movie>> getMovies() async {
+    return await loadMoviesFromAsset();
   }
 
-  Movie? getMovieById(String id) {
-    for (final movie in getMovies()) {
+  Future<Movie?> getMovieById(String id) async {
+    final movies = await getMovies();
+
+    for (final movie in movies) {
       if (movie.id == id) {
         return movie;
       }
     }
+
     return null;
   }
 }

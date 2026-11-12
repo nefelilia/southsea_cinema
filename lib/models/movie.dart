@@ -1,4 +1,3 @@
-
 class Movie {
   final String id;
   final String title;
@@ -46,6 +45,5 @@ class Movie {
     };
   }
 
-  String get formattedPrice =>
-      '£${ticketPrice.toStringAsFixed(2)}';
+  String get formattedPrice => '£${ticketPrice.toStringAsFixed(2)}';
 }
