@@ -1,76 +1,90 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences_platform_interface/shared_preferences_async_platform_interface.dart';
+import 'package:shared_preferences_platform_interface/in_memory_shared_preferences_async.dart';
 import 'package:southsea_cinema/models/customer_settings.dart';
 import 'package:southsea_cinema/repositories/customer_settings_repository.dart';
 
 void main() {
-  group('Customer Settings Repository Tests', () {
-    test('Settings are initially empty', () {
-      final repository = CustomerSettingsRepository();
+  late CustomerSettingsRepository repository;
 
-      expect(repository.settings, isNull);
+  const settings = CustomerSettings(
+    fullName: 'Alex Smith',
+    address: '10 High Street, Portsmouth',
+    email: 'alex@example.com',
+    patronNumber: '1234',
+    receiveNews: true,
+  );
+
+  setUp(() {
+    SharedPreferencesAsyncPlatform.instance =
+        InMemorySharedPreferencesAsync.empty();
+
+    repository = CustomerSettingsRepository();
+  });
+
+  group('CustomerSettingsRepository tests', () {
+    test('Default settings are empty', () async {
+      final result = await repository.loadSettings();
+
+      expect(result.fullName, '');
+      expect(result.address, '');
+      expect(result.email, '');
+      expect(result.patronNumber, '');
+      expect(result.receiveNews, false);
     });
 
-    test('Customer settings can be saved', () {
-      final repository = CustomerSettingsRepository();
+    test('Save and load customer settings', () async {
+      await repository.saveSettings(settings);
 
-      const settings = CustomerSettings(
-        fullName: 'Alex Smith',
-        address: 'Portsmouth',
-        email: 'alex@example.com',
-        patronNumber: '1234',
-        receiveNews: true,
+      final result = await repository.loadSettings();
+
+      expect(result.fullName, 'Alex Smith');
+      expect(
+        result.address,
+        '10 High Street, Portsmouth',
       );
-
-      repository.saveSettings(settings);
-
-      expect(repository.settings?.fullName, 'Alex Smith');
-      expect(repository.settings?.address, 'Portsmouth');
-      expect(repository.settings?.email, 'alex@example.com');
-      expect(repository.settings?.patronNumber, '1234');
-      expect(repository.settings?.receiveNews, true);
+      expect(result.email, 'alex@example.com');
+      expect(result.patronNumber, '1234');
+      expect(result.receiveNews, true);
     });
 
-    test('Customer settings can be updated', () {
-      final repository = CustomerSettingsRepository();
+    test('Customer settings can be updated', () async {
+      await repository.saveSettings(settings);
 
-      const original = CustomerSettings(
-        fullName: 'Alex Smith',
-        address: 'Portsmouth',
-        email: 'alex@example.com',
-        patronNumber: '1234',
-        receiveNews: true,
-      );
-
-      const updated = CustomerSettings(
-        fullName: 'Alex Smith',
-        address: 'London',
-        email: 'alex@example.com',
-        patronNumber: '1234',
+      const updatedSettings = CustomerSettings(
+        fullName: 'Jamie Smith',
+        address: '20 High Street, Portsmouth',
+        email: 'jamie@example.com',
+        patronNumber: '5678',
         receiveNews: false,
       );
 
-      repository.saveSettings(original);
-      repository.saveSettings(updated);
+      await repository.saveSettings(updatedSettings);
 
-      expect(repository.settings?.address, 'London');
-      expect(repository.settings?.receiveNews, false);
+      final result = await repository.loadSettings();
+
+      expect(result.fullName, 'Jamie Smith');
+      expect(
+        result.address,
+        '20 High Street, Portsmouth',
+      );
+      expect(result.email, 'jamie@example.com');
+      expect(result.patronNumber, '5678');
+      expect(result.receiveNews, false);
     });
 
-    test('Customer settings can be cleared', () {
-      final repository = CustomerSettingsRepository();
+    test('Customer settings can be cleared', () async {
+      await repository.saveSettings(settings);
 
-      const settings = CustomerSettings(
-        fullName: 'Alex Smith',
-        address: 'Portsmouth',
-        email: 'alex@example.com',
-        patronNumber: '1234',
-        receiveNews: true,
-      );
+      await repository.clearSettings();
 
-      repository.saveSettings(settings);
-      repository.clearSettings();
+      final result = await repository.loadSettings();
 
-      expect(repository.settings, isNull);
+      expect(result.fullName, '');
+      expect(result.address, '');
+      expect(result.email, '');
+      expect(result.patronNumber, '');
+      expect(result.receiveNews, false);
     });
   });
 }
